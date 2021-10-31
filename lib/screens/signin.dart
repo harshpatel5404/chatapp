@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatefulWidget {
@@ -46,32 +47,25 @@ class _SignInState extends State<SignIn> {
             Padding(
                 padding: EdgeInsets.all(10.0),
                 child: SignInButton(
+                  
                   Buttons.Google,
                   text: "Sign up with Google",
                   onPressed: () {
                     signInWithGoogle().then(
-                      (value) => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage())),
+                      (value) => Get.off(HomePage())
                     );
                   },
                 )),
-            Padding(
-                padding: EdgeInsets.all(10.0),
-                child: SignInButton(
-                  Buttons.Facebook,
-                  text: "Sign up with Facebook",
-                  onPressed: () {
-                    // signInWithFacebook();
-                  },
-                )),
-            Padding(
-                padding: EdgeInsets.all(10.0),
-                child: GestureDetector(
-                    child: Text("Log In Using Email",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue)),
-                    onTap: () {}))
+            // Padding(
+            //     padding: EdgeInsets.all(10.0),
+            //     child: SignInButton(
+            //       Buttons.Facebook,
+            //       text: "Sign up with Facebook",
+            //       onPressed: () {
+            //         // signInWithFacebook();
+            //       },
+            //     )),
+         
           ]),
     ));
   }

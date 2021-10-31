@@ -87,6 +87,10 @@ flutter:
     - family: Poppines
       fonts:
         - asset: assets/fonts/Poppins-Bold.ttf
+    - family: baloobhai
+      fonts:
+        - asset: assets/fonts/BalooBhai2-Regular.ttf
+      
         # - asset: fonts/Schyler-Italic.ttf
         #   style: italic
   #   - family: Trajan Pro
