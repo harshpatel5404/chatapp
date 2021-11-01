@@ -1,6 +1,6 @@
 import 'package:chatapp/controller/getxcontroller.dart';
 import 'package:chatapp/main.dart';
-import 'package:chatapp/screens/chatroom.dart';
+import 'package:chatapp/screens/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,10 +46,6 @@ class _FriendsTabViewState extends State<FriendsTabView> {
     String chatRoomId(String user1, String user2) {
       if (user1[0].toLowerCase().codeUnits[0] >
           user2.toLowerCase().codeUnits[0]) {
-        // print("user1");
-        // print(user1[0].toLowerCase().codeUnits[0]);
-        // print("user2");
-        // print(user2.toLowerCase().codeUnits[0]);
         return "$user1$user2";
       } else {
         return "$user2$user1";

@@ -62,7 +62,8 @@ Future<String?> signInWithGoogle() async {
         "name": name,
         "email": email,
         "imageUrl": imageUrl,
-        "uid": _auth.currentUser!.uid
+        "uid": _auth.currentUser!.uid,
+        "status": "Unavalible",
       });
     } catch (e) {
       print("error on store login data : $e");

@@ -22,7 +22,7 @@ Future<void> main() async {
   Hive.init(directory.path);
   Hive.registerAdapter(ChatListAdapter());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
   controller.getChatList();
   runApp(MyApp(
       defaultHome: (true == await getLoggedIn()) ? HomePage() : SignIn()));

@@ -2,13 +2,11 @@ import 'package:chatapp/controller/getxcontroller.dart';
 import 'package:chatapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'chatroom.dart';
+import '../chat_screen.dart';
 
 class ChatTabView extends StatelessWidget {
   ChatTabView({Key? key}) : super(key: key);
-
   Controller controller = Get.put(Controller());
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -21,9 +19,7 @@ class ChatTabView extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       Map usersMap = controller.chatList[index].userMap;
-                      String roomId = controller.chatList[index].roomId;
-
-                      
+                      String roomId = controller.chatList[index].roomId;                      
                       return Container(
                         height: size.height / 10,
                         width: size.width,
@@ -57,7 +53,7 @@ class ChatTabView extends StatelessWidget {
                 ),
               ],
             )
-          : Center(child: CircularProgressIndicator()),
+          : Center(child: Text("No Chats Found!",style: TextStyle(color: Colors.white),)),
     );
   }
 }

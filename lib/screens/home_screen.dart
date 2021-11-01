@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:chatapp/auth/auth_sign_google.dart';
 import 'package:chatapp/constants/shared_prefs.dart';
 import 'package:chatapp/controller/getxcontroller.dart';
-import 'package:chatapp/screens/friends_list.dart';
+import 'package:chatapp/screens/tabs/friends.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'chats.dart';
+import 'tabs/chats.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -17,9 +19,28 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver{
   PrefManager prefManager = Get.put(PrefManager());
   Controller controller = Get.put(Controller());
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+
+  void setStatus(String status) async {
+    await _firestore.collection('users').doc(_auth.currentUser!.uid).update({
+      "status": status,
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setStatus("Online");
+    } else {
+      setStatus("Offline");
+    }
+  }
+
 
   @override
   void initState() {
@@ -30,35 +51,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print("users ${controller.userMap['uid']}");
-    // body: Obx(() => controller.userMap['email'] != ""
-    //     ?  Center(child: Text(controller.userMap['name'].toString()))
-    //     :  Center(child: CircularProgressIndicator())),
-
-    // return  DefaultTabController(
-    //   length: 3,
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       title: Text("Social Chat"),
-    //       centerTitle: true,
-    //       bottom: TabBar(
-    //         tabs: [
-
-    //           Tab(text: "Chats",),
-    //           Tab(text: "Friends",),
-    //           Tab(text: "Calls",),
-    //         ],
-    //       ),
-    //     ),
-    //     body: TabBarView(children: [
-    //     FriendsTabView(),
-    //       Text("chats"),
-    //       Text("cha11"),
-    //       Text("Calls"),
-    //     ]),
-    //   ),
-    // );
-
     return DefaultTabController(
       length: 3,
       child: Scaffold(
