@@ -7,12 +7,17 @@ class PrefManager extends GetxController {
   RxString email = "".obs;
   RxString imageUrl = "".obs;
   RxString uid = "".obs;
-  // Future preferense() async{
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs;
-  // }
 
   RxMap userMap = {}.obs;
+  RxList<String>? userList;
+
+  Future setuserlist() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("userlist", userList!);
+        return prefs;
+  }
+
+
   Future<void> getAccountObject() async {
     name.value = (await getName())!;
     email.value = (await getEmail())!;

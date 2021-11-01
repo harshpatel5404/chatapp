@@ -1,6 +1,11 @@
+import 'package:chatapp/controller/getxcontroller.dart';
+import 'package:chatapp/main.dart';
+import 'package:chatapp/models/chatlist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class ChatRoom extends StatelessWidget {
   final Map? userMap;
@@ -11,6 +16,7 @@ class ChatRoom extends StatelessWidget {
   final TextEditingController _message = TextEditingController();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Controller controller = Get.find();
 
   void onSendMessage() async {
     if (_message.text.isNotEmpty) {
@@ -26,8 +32,25 @@ class ChatRoom extends StatelessWidget {
           .doc(chatRoomId)
           .collection('chats')
           .add(messages);
-    } else {
-      print("Enter Some Text");
+
+      ChatList chatlist = ChatList(
+        roomId: chatRoomId!,
+        userMap: userMap!,
+      );
+      var box = await Hive.openBox<ChatList>("chatlistbox");
+      // box.add(chatlist);
+      // controller.chatList.add(chatlist);
+      List roomidList = [];
+      for (var i = 0; i < controller.chatList.length; i++) {
+        roomidList.add(controller.chatList[i].roomId);
+      }
+
+      if (!roomidList.contains(chatRoomId!)) {
+        box.add(chatlist);
+        controller.chatList.add(chatlist);
+      } else {
+        print("roomid Exites");
+      }
     }
   }
 
@@ -106,8 +129,7 @@ class ChatRoom extends StatelessWidget {
                           )),
                     ),
                   ),
-                  IconButton(
-                      icon: Icon(Icons.send), onPressed: onSendMessage),
+                  IconButton(icon: Icon(Icons.send), onPressed: onSendMessage),
                 ],
               ),
             ),
