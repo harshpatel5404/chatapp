@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:chatapp/controller/getxcontroller.dart';
-import 'package:chatapp/main.dart';
 import 'package:chatapp/models/chatlist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -121,38 +120,62 @@ class ChatRoom extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        centerTitle: true,
+         
         title: StreamBuilder<DocumentSnapshot>(
           stream:
               _firestore.collection('users').doc(userMap!['uid']).snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
-            // if (snapshot.data !=null) {
-            //   print(snapshot.data!['status']);
-            // }
-            return snapshot.data != null ? Container(
-              child: Column(
-                children: [
-                  Row(
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                
+            return snapshot.data != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
+                        radius: 23,
                         backgroundImage: NetworkImage(userMap!['imageUrl']),
                       ),
                       SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        userMap!['name'],
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
+                      Container(
+                        width: size.width*0.5,
+                        // color: Colors.red,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              userMap!['name'],
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 17),
+                              textAlign: TextAlign.center,
+                            ),
+                            Row(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 4,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  userMap!['status'],
+                                  style: TextStyle(fontSize: 15),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ],
-                  ),
-                  Text(snapshot.data!['status'])
-                ],
-              ),
-            ) : Container();
+                  )
+                : Container();
           },
         ),
       ),
@@ -164,7 +187,7 @@ class ChatRoom extends StatelessWidget {
             ),
             Container(
               color: Colors.black,
-              height: size.height * 0.68,
+              height: size.height * 0.70,
               width: size.width,
               child: StreamBuilder<QuerySnapshot>(
                 stream: _firestore

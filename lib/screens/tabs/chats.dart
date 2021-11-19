@@ -1,5 +1,4 @@
 import 'package:chatapp/controller/getxcontroller.dart';
-import 'package:chatapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../chat_screen.dart';

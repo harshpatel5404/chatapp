@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:chatapp/controller/getxcontroller.dart';
 import 'package:chatapp/models/chatlist.dart';
 import 'package:chatapp/screens/signin.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'auth/auth_sign_google.dart';
 import 'constants/shared_prefs.dart';
 import 'screens/home_screen.dart';
@@ -22,7 +20,12 @@ Future<void> main() async {
   Hive.init(directory.path);
   Hive.registerAdapter(ChatListAdapter());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle
+  (
+    statusBarColor: Colors.red,
+    systemNavigationBarColor: Colors.transparent,
+  ));
   controller.getChatList();
   runApp(MyApp(
       defaultHome: (true == await getLoggedIn()) ? HomePage() : SignIn()));
@@ -40,7 +43,7 @@ class MyApp extends StatelessWidget {
       title: 'Chat App',
       theme: ThemeData(
         primarySwatch: Colors.green,
-        fontFamily: "baloobhai",
+        // fontFamily: "baloobhai",
       ),
       home: defaultHome,
     );
